@@ -1,38 +1,33 @@
-[
-    {
-        "id": 10,
-        "username":"juan",
-        "email": "juan@test.mx",
-        "psw": "juan",
-        "sexo": "M",
-        "url": "https://randomuser.me/api/portraits/men/10",
-        "hobbies": ["fut","karate"]
-    },
-    {
-        "id": 12,
-        "username":"maria",
-        "email": "maria@test.mx",
-        "psw": "maria",
-        "sexo": "F",
-        "url": "https://randomuser.me/api/portraits/women/12",
-        "hobbies": ["bailar","programar"]
-    },
-    {
-        "id": 23,
-        "username":"jorge",
-        "email": "jorge@test.mx",
-        "psw": "jorge",
-        "sexo": "M",
-        "url": "https://randomuser.me/api/portraits/men/23",
-        "hobbies": ["karate"]
-    },
-    {
-        "id": 34,
-        "username":"mar",
-        "email": "mar@test.mx",
-        "psw": "mar",
-        "sexo": "F",
-        "url": "https://randomuser.me/api/portraits/women/34",
-        "hobbies": ["JS","HTML","CSS"]
-    }
-]
+[{
+    "id": 10,
+    "username": "juan",
+    "email": "juan@test.mx",
+    "psw": "juan",
+    "sexo": "M",
+    "url": "https://randomuser.me/api/portraits/men/10.jpg",
+    "hobbies": ["fut", "karate"]
+}, {
+    "id": 12,
+    "username": "maria",
+    "email": "maria@test.mx",
+    "psw": "maria",
+    "sexo": "F",
+    "url": "https://randomuser.me/api/portraits/women/12.jpg",
+    "hobbies": ["bailar", "programar"]
+}, {
+    "id": 23,
+    "username": "jorge",
+    "email": "jorge@test.mx",
+    "psw": "jorge",
+    "sexo": "M",
+    "url": "https://randomuser.me/api/portraits/men/23.jpg",
+    "hobbies": ["karate"]
+}, {
+    "id": 34,
+    "username": "mar",
+    "email": "mar@test.mx",
+    "psw": "mar",
+    "sexo": "F",
+    "url": "https://randomuser.me/api/portraits/women/34.jpg",
+    "hobbies": ["JS", "HTML", "CSS"]
+}]

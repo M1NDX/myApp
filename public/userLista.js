@@ -1,14 +1,30 @@
+let usuarios = [];
+
+cargarDatos();
+
+function cargarDatos() {
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET', '/api/usuario');
+  //xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send();
+  xhr.onload = function () {
+    if (xhr.status != 200) {
+      console.log(xhr.statusText);
+      usuarios.push(new User("Juan", "test@test.com", "1234", "M", ["Futbol", "natación"]));
+      usuarios.push(new User("Ana", "testA@test.com", "A1234", "F"));
+    } else {
+      usuarios = JSON.parse(xhr.response);
+      console.log(xhr.response);
+    }
+    actualizarHTML(usuarios);
+  }
+}
 
 
-let usuarios  = [];
-
-usuarios.push(new User("Juan","test@test.com", "1234","M",["Futbol","natación"]) );
-usuarios.push(new User("Ana","testA@test.com", "A1234","F") );
-actualizarHTML(usuarios);
 
 console.log(usuarios);
 
-$('#modelId').on('shown.bs.modal', function() {
+$('#modelId').on('shown.bs.modal', function () {
   $('#username').focus();
 })
 
@@ -18,48 +34,65 @@ bNuevo.addEventListener('click', establecerModoRegistro);
 
 let modoRegistro = true;
 let usuarioEdit;
-function establecerModoRegistro(){
+
+function establecerModoRegistro() {
   document.querySelector('#modelId h5.modal-title')
-          .innerText =  "Registrar Usu ario";
+    .innerText = "Registrar Usu ario";
   modoRegistro = true;
   document.querySelector('form').reset();
   document.querySelector('#username').focus();
 }
 
-
-function registrarUsuario(){
-
-    console.log("guardando");
-    let username = document.querySelector('#username').value;
-    let email = document.querySelector('#email').value;
-    let psw = document.querySelector('#psw').value;
-    let hobbies = document.querySelector('#hobbies').value;
-    let sx =document.querySelector('#sxf').checked ? 'F':'M'
-     if(modoRegistro){
-      let nUser = new User(username,email,psw,sx,hobbies.split('\n'));
-      usuarios.push(nUser);
-    }else{
-      usuarioEdit.username = username;
-      usuarioEdit.email = email;
-      usuarioEdit.password = psw;
-      usuarioEdit.hobbies = hobbies.split('\n');
+function guardarUsuario(usuario) {
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST', '/api/usuario');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(usuario));
+  xhr.onload = function () {
+    if (xhr.status > 201) {
+      console.log("error en servidor");
+    } else {
+      usuarios = JSON.parse(xhr.response);
+      actualizarHTML(usuarios);
     }
-   
-    actualizarHTML(usuarios);
-     $('#modelId').modal('hide');
+  }
 }
 
-function borrarUsuario(id){
-   console.log("se borrará el usuario "+id);
-   let pos = usuarios.findIndex(usr => usr.id == id);
-   usuarios.splice(pos,1); //borrar un usuario, el de la posición pos
+function registrarUsuario() {
+
+  console.log("guardando");
+  let username = document.querySelector('#username').value;
+  let email = document.querySelector('#email').value;
+  let psw = document.querySelector('#psw').value;
+  let hobbies = document.querySelector('#hobbies').value;
+  let sx = document.querySelector('#sxf').checked ? 'F' : 'M'
+  if (modoRegistro) {
+    let nUser = new User(username, email, psw, sx, hobbies.split('\n'));
+    guardarUsuario(nUser);
+
+    //usuarios.push(nUser);
+  } else {
+    usuarioEdit.username = username;
+    usuarioEdit.email = email;
+    usuarioEdit.password = psw;
+    usuarioEdit.hobbies = hobbies.split('\n');
+  }
+
+  actualizarHTML(usuarios);
+  $('#modelId').modal('hide');
+}
+
+function borrarUsuario(id) {
+  console.log("se borrará el usuario " + id);
+  let pos = usuarios.findIndex(usr => usr.id == id);
+  usuarios.splice(pos, 1); //borrar un usuario, el de la posición pos
   actualizarHTML(usuarios);
 }
 
-function editarUsuario(id){
+function editarUsuario(id) {
   let user = usuarios.find(usr => usr.id == id);
-  if(user){
-    modoRegistro= false;
+  if (user) {
+    modoRegistro = false;
     usuarioEdit = user;
     document.querySelector('#modelId h5.modal-title').innerText = "Editar Usuario";
     document.getElementById('imagenR').src = user.url;
@@ -67,14 +100,14 @@ function editarUsuario(id){
     document.querySelector('#email').value = user.email;
     //document.querySelector('#psw').hidden = true;
     document.querySelector('#psw').value = user.password;
-    document.querySelector('#sxf').checked = user.sexo =='F';
-    document.querySelector('#sxm').checked = user.sexo =='M';
-    document.querySelector('#hobbies').value= user.hobbies.join('\n');
+    document.querySelector('#sxf').checked = user.sexo == 'F';
+    document.querySelector('#sxm').checked = user.sexo == 'M';
+    document.querySelector('#hobbies').value = user.hobbies.join('\n');
   }
 
 }
 
-function filtrarUsuarios(){
+function filtrarUsuarios() {
   console.log("usuarios filtrados");
   let campoBusqueda = document.getElementById('search');
   let valor = campoBusqueda.value;
@@ -82,21 +115,21 @@ function filtrarUsuarios(){
   actualizarHTML(filtro);
 }
 
-function actualizarHTML(arreglo){
-     //let user0html = userToHTML(usuarios[0]);
-    //document.querySelector('ul').insertAdjacentHTML('beforeend', user0html);
-    let lista = document.querySelector('ul');
-    let html = arreglo.map(user => userToHTML(user)).join(' ');
-    lista.innerHTML = html;
+function actualizarHTML(arreglo) {
+  //let user0html = userToHTML(usuarios[0]);
+  //document.querySelector('ul').insertAdjacentHTML('beforeend', user0html);
+  let lista = document.querySelector('ul');
+  let html = arreglo.map(user => userToHTML(user)).join(' ');
+  lista.innerHTML = html;
 
-    /*arreglo.forEach(user => document.querySelector('ul')
-                            .insertAdjacentHTML('beforeend',
-                            userToHTML(user)));*/
+  /*arreglo.forEach(user => document.querySelector('ul')
+                          .insertAdjacentHTML('beforeend',
+                          userToHTML(user)));*/
 
 }
 
-function userToHTML(user){
-    let html = /*html*/
+function userToHTML(user) {
+  let html = /*html*/
     `<li class="list-group-item">
     <div class="row">
       <div class="col-2">
@@ -124,6 +157,6 @@ function userToHTML(user){
     </div>
   </li>`;
 
-    return html;
+  return html;
 
 }
