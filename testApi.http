@@ -2,3 +2,16 @@ GET http://localhost:3000
 
 ###
 GET http://localhost:3000/usuarios
+
+###
+
+POST http://localhost:3000/usuarios
+content-type: application/json
+
+{
+    "username": "user1",
+    "email":"test@sdfasdf.mx",
+    "password": "asdfas",
+    "sexo":"M",
+    "hobbies":["primero","segundo"]
+}

@@ -40,6 +40,20 @@ function establecerModoRegistro(){
   document.querySelector('#username').focus();
 }
 
+function guardarDatos(user){
+   let xhr = new XMLHttpRequest();
+   xhr.open('POST','/usuarios');
+   xhr.setRequestHeader('Content-Type','application/json');
+  xhr.send(JSON.stringify(user));
+  xhr.onload = function() {
+      if(xhr.status != 201){
+          console.log("error al guardar usuario");
+      }else{
+         usuarios = JSON.parse(xhr.response);
+         actualizarHTML(usuarios);
+      }
+  }
+}
 
 function registrarUsuario(){
 
@@ -52,6 +66,7 @@ function registrarUsuario(){
      if(modoRegistro){
       let nUser = new User(username,email,psw,sx,hobbies.split('\n'));
       usuarios.push(nUser);
+      guardarDatos(nUser);
     }else{
       usuarioEdit.username = username;
       usuarioEdit.email = email;
