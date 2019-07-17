@@ -30,4 +30,20 @@
     "sexo": "F",
     "url": "https://randomuser.me/api/portraits/women/34.jpg",
     "hobbies": ["JS", "HTML", "CSS"]
+}, {
+    "id": 35,
+    "username": "luisF",
+    "email": "asdf123@test.mx",
+    "password": "asdfv",
+    "hobbies": ["primero", "segundo"],
+    "sexo": "M",
+    "url": "https://randomuser.me/api/portraits/men/35.jpg"
+}, {
+    "id": 36,
+    "username": "ana",
+    "email": "asdf234@sdfa.hk",
+    "password": "345346",
+    "hobbies": ["asdf", "dfgdg"],
+    "sexo": "F",
+    "url": "https://randomuser.me/api/portraits/women/36.jpg"
 }]
